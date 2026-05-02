@@ -1,11 +1,5 @@
 import streamlit as st
 import PyPDF2
-from openai import OpenAI
-
-import os
-from openai import OpenAI
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 st.title("AI Resume Analyzer")
 
@@ -28,9 +22,9 @@ def analyze_resume(text):
     elif len(found_skills) >= 3:
         level = "Moderate Profile 👍"
     else:
-        level = "Needs Improvement ⚠️" 
+        level = "Needs Improvement ⚠️"
+
     result = f"""
-    
 ✅ Skills Found: {', '.join(found_skills) if found_skills else 'None detected'}
 
 📊 Profile Level: {level}
@@ -61,6 +55,5 @@ if uploaded_file:
         st.subheader("Analysis Result")
         st.write(result)
 
-    # Skill score visualization
     score = len([s for s in ["Python","Java","C","ML","AI","SQL","IoT","MATLAB"] if s.lower() in resume_text.lower()])
     st.progress(score * 10)
