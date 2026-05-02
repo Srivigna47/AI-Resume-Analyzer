@@ -1,5 +1,5 @@
 import streamlit as st
-import fitz  # PyMuPDF
+import PyPDF2
 from openai import OpenAI
 
 import os
@@ -12,10 +12,10 @@ st.title("AI Resume Analyzer")
 uploaded_file = st.file_uploader("Upload your Resume (PDF)", type="pdf")
 
 def extract_text(file):
-    doc = fitz.open(stream=file.read(), filetype="pdf")
+    reader = PyPDF2.PdfReader(file)
     text = ""
-    for page in doc:
-        text += page.get_text()
+    for page in reader.pages:
+        text += page.extract_text() or ""
     return text
 
 def analyze_resume(text):
